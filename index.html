@@ -950,15 +950,23 @@ function finishGeneration(optionKey) {
 }
 
 function setPreviewImage(imgEl, src, altText) {
+  const wrapper = imgEl.closest(".compare-media");
+
+  // Remove any previous placeholder shown for this box
+  const existingPlaceholder = wrapper.querySelector(".img-placeholder");
+  if (existingPlaceholder) existingPlaceholder.remove();
+
+  imgEl.style.display = "";
   imgEl.onerror = () => {
     imgEl.onerror = null;
+    imgEl.style.display = "none";
     const placeholder = document.createElement("div");
     placeholder.className = "img-placeholder";
     placeholder.textContent = "Image coming soon";
-    imgEl.replaceWith(placeholder);
+    wrapper.appendChild(placeholder);
   };
-  imgEl.src = src;
   imgEl.alt = altText;
+  imgEl.src = src;
 }
 
 copyBtn.addEventListener("click", async () => {
