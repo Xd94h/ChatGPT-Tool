@@ -250,12 +250,18 @@ button:focus-visible,
 .compare-card{ margin: 0; }
 
 .compare-media{
+  position: relative;
   background: var(--bg-elevated);
-  border: 1px solid var(--border-subtle);
+  border: 2px solid #0a0a0a;
   border-radius: var(--radius-md);
   overflow: hidden;
   aspect-ratio: 3 / 4;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+  box-shadow:
+    0 0 0 1px #000,
+    inset 0 0 0 1px rgba(255, 209, 70, 0.9),
+    inset 0 0 14px rgba(255, 209, 70, 0.35),
+    0 0 18px rgba(255, 209, 70, 0.45),
+    0 12px 30px rgba(0,0,0,0.45);
 }
 .compare-media img{ width: 100%; height: 100%; object-fit: cover; }
 
@@ -316,11 +322,16 @@ button:focus-visible,
 
 .upload-preview-media{
   background: var(--bg-elevated);
-  border: 1px solid var(--green-dim);
+  border: 2px solid #0a0a0a;
   border-radius: var(--radius-lg);
   overflow: hidden;
   aspect-ratio: 3 / 4;
-  box-shadow: 0 12px 34px rgba(0,0,0,0.5), 0 0 30px rgba(52,224,122,0.12);
+  box-shadow:
+    0 0 0 1px #000,
+    inset 0 0 0 1px rgba(255, 209, 70, 0.9),
+    inset 0 0 14px rgba(255, 209, 70, 0.35),
+    0 0 18px rgba(255, 209, 70, 0.45),
+    0 12px 34px rgba(0,0,0,0.5);
 }
 
 .upload-preview-media img{
@@ -606,8 +617,8 @@ button:focus-visible,
 @media (max-width: 640px){
   .hero{ padding: 64px 20px 40px; }
   .section{ padding: 48px 20px; }
-  .compare-grid{ grid-template-columns: 1fr; }
-  .compare-media{ aspect-ratio: 4 / 3; }
+  .compare-grid{ grid-template-columns: 1fr 1fr; gap: 12px; max-width: 320px; margin: 0 auto; }
+  .compare-media{ aspect-ratio: 3 / 4; }
   .btn{ width: 100%; }
   #generateImageBtn{ width: auto; }
   .prompt-actions{ flex-direction: column; }
@@ -737,7 +748,7 @@ button:focus-visible,
 
 </main>
 
-<footer class="footer">
+<footer class="footer hidden">
   <p class="footer-brand">ARIGASTVA.AGENCY</p>
   <div class="footer-divider"></div>
   <p class="footer-credit">© 2026 ARIGASTVA AGENCY — DESIGNED &amp; BUILT BY <a href="https://xd94h.github.io/Portfolio-xd94h/" target="_blank" rel="noopener noreferrer" class="footer-credit-link">Shivam</a></p>
@@ -786,6 +797,12 @@ const OPTIONS = {
     prompt: "Enhance the image as much as possible and balance the lighting on the face so that one side does not appear darker or brighter than the other. Fix the uneven lighting and improve the overall image quality. Correct the person's posture naturally so they appear straight and properly aligned, as required for a professional passport-size photograph. Change the background to a clean light-blue color. Make the photo properly suitable for a passport-size photograph. Keep the person's original face, identity, facial features, hairstyle, clothing, and overall appearance unchanged. Do not make any unnecessary changes.",
     before: "assets/images/posture-before.jpg",
     after: "assets/images/posture-after.jpg"
+  },
+  universal: {
+    title: "Universal Prompt",
+    prompt: "Enhance the image as much as possible and balance the lighting on the face so that one side does not appear darker or brighter than the other. Fix the uneven lighting and improve the overall image quality. Remove sunglasses, earbuds, or any tinted eyewear if present, while keeping the person's natural eyes and facial features realistic. Fix any bent neck and straighten it naturally so the head and neck are properly aligned. Correct the person's posture naturally so they appear straight and properly aligned, as required for a professional passport-size photograph. Change the background to a clean light-blue color. Make the photo look properly suitable for a passport-size photograph. Keep the person's original face, identity, facial features, hairstyle, clothing, and overall appearance unchanged. Do not make any unnecessary changes.",
+    before: "assets/images/universal-before.jpg",
+    after: "assets/images/universal-after.jpg"
   },
   sample1: {
     title: "Fix Bent Neck/Image",
@@ -969,9 +986,11 @@ copyBtn.addEventListener("click", async () => {
 generateImageBtn.addEventListener("click", () => {
   const hero = document.getElementById("hero");
   const toolSections = document.getElementById("toolSections");
+  const footer = document.querySelector(".footer");
 
   hero.classList.add("hidden");
   toolSections.classList.remove("hidden");
+  if (footer) footer.classList.remove("hidden");
 
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
